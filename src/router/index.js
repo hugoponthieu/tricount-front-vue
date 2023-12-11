@@ -13,6 +13,11 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  {
+    path: "/groupe/:id",
+    name: "group.show",
+    component: () => import("@/views/GroupDashboard.vue"),
+  },
 ];
 
 const router = createRouter({

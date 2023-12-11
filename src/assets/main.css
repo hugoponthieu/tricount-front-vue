@@ -1,3 +1,27 @@
 .full-width{
     width: 100vw;
 }
+
+@font-face {
+    font-family: Gustavo;
+    font-style: normal;
+    src: url('./Gustavo_Font/gustavo_regular-webfont.woff');
+
+}
+
+@font-face {
+    font-family: Gustavo;
+    font-style: bold;
+    src: url('./Gustavo_Font/gustavo_bold-webfont.woff');
+
+}
+
+.simple-text{
+    font-family: Gustavo;
+    font-style: normal;
+}
+
+.logo{
+    font-family: Gustavo;
+    font-size: xxx-large;
+}
