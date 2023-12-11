@@ -1,10 +1,19 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <div class="row min-vh-100">
+    <div class="col-3 bg-black"><TheRightSideNav /></div>
+    <div class="col-8"><router-view /></div>
+  </div>
 </template>
+
+<script>
+import TheRightSideNav from "@/components/TheRightSideNav.vue";
+
+export default {
+  components: {
+    TheRightSideNav,
+  },
+};
+</script>
 
 <style>
 #app {
