@@ -22,6 +22,12 @@
     font-size: x-large;
 }
 
+.medium-text{
+    font-family: Gustavo;
+    font-style: normal;
+    font-size: xx-large;
+}
+
 .logo{
     font-family: Gustavo;
     font-size: xxx-large;

@@ -9,11 +9,13 @@
           <div class="row">
             <router-link
               v-for="groupe in groups"
-              :script="console.log(groupe)"
               :key="groupe.id"
-              v-bind:to="{ name: 'group', params: { id: groupe.id } }"
+              v-bind:to="{
+                name: 'group',
+                params: { id: groupe.id, name: groupe.nom },
+              }"
             >
-              <p class="simple-text card">{{ groupe.nom }}</p>
+              <p class="medium-text card">{{ groupe.nom }}</p>
             </router-link>
           </div>
         </nav>
@@ -29,14 +31,12 @@ const groups = ref([]);
 
 const getGroups = async () => {
   try {
-    console.log("promise");
     const response = await fetch("http://localhost:3000/groupe");
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching groups:", error);
-    throw error; // Re-throw the error to propagate it further if needed
+    throw error;
   }
 };
 
