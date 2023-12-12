@@ -15,7 +15,7 @@ const routes = [
   },
   {
     path: "/groupe/:id",
-    name: "group.show",
+    name: "group",
     component: () => import("@/views/GroupDashboard.vue"),
   },
 ];

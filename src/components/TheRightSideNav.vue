@@ -6,22 +6,46 @@
         <nav>
           <router-link class="simple-text" to="/">Home</router-link> |
           <router-link class="simple-text" to="/about">About</router-link>
+          <div class="row">
+            <router-link
+              v-for="groupe in groups"
+              :script="console.log(groupe)"
+              :key="groupe.id"
+              v-bind:to="{ name: 'group', params: { id: groupe.id } }"
+            >
+              <p class="simple-text card">{{ groupe.nom }}</p>
+            </router-link>
+          </div>
         </nav>
-
-        <router-link
-          :v-for="groupe in goupes"
-          :key="groupe.id"
-          :to="{ name: 'groupe.show' }"
-        >
-        </router-link>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {},
-  computed: {},
+<script setup>
+import { onMounted, ref } from "vue";
+
+const groups = ref([]);
+
+const getGroups = async () => {
+  try {
+    console.log("promise");
+    const response = await fetch("http://localhost:3000/groupe");
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching groups:", error);
+    throw error; // Re-throw the error to propagate it further if needed
+  }
 };
+
+onMounted(async () => {
+  try {
+    const data = await getGroups();
+    groups.value = data;
+  } catch (error) {
+    console.error("Error setting groups:", error);
+  }
+});
 </script>
