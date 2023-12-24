@@ -15,7 +15,7 @@
             type="email"
             class="form-control mb-2"
             id="emailInput"
-            placeholder="email"
+            v-model="email"
           />
           <label class="sr-only text-regular" for="inlineFormInput"
             >password</label
@@ -24,7 +24,7 @@
             type="password"
             class="form-control"
             id="passwordInput"
-            placeholder="password"
+            v-model="password"
           />
         </div>
       </div>
@@ -34,6 +34,7 @@
             type="button"
             class="btn bg-black text-white"
             style="font-family: 'Gustavo'"
+            v-on:click="getAuth"
           >
             Connexion
           </button>
@@ -42,3 +43,22 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref } from "vue";
+const email = ref("");
+const password = ref("");
+const getAuth = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/login/${email.value}`, {
+      method: "POST",
+      body: { pwd: password.value },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching groups:", error);
+    throw error;
+  }
+};
+</script>
