@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from "vue-router";
+/* eslint-disable no-unused-vars */
+import { createRouter, createWebHistory, beforeEach } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 
 const routes = [
@@ -29,5 +30,9 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+// router.beforeEach(async (to, from) => {
+//   router.replace("/login");
+// });
 
 export default router;

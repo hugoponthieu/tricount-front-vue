@@ -4,9 +4,11 @@
       <div class="col">
         <p class="logo">YourCount</p>
         <nav>
-          <router-link class="simple-text" to="/">Home</router-link> |
-          <router-link class="simple-text" to="/about">About</router-link>
           <div class="row">
+            <router-link v-if="isAuth" v-bind:to="{ name: 'login' }"
+              >login</router-link
+            >
+            <router-link v-bind:to="{ name: 'home' }">home</router-link>
             <router-link
               v-for="groupe in groups"
               :key="groupe.id"
@@ -25,6 +27,8 @@
 </template>
 
 <script setup>
+import { store } from "@/store";
+var isAuth = store;
 import { onMounted, ref } from "vue";
 
 const groups = ref([]);
