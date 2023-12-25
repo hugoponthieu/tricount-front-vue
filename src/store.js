@@ -2,8 +2,9 @@ import { computed } from "vue";
 
 export const store = computed(async () => {
   try {
-    const response = await fetch(`http://localhost:3000/auth`);
-    const isAuth = (await response.status()) == 200;
+    const response = await fetch(`http://localhost:3000/user/auth`);
+
+    const isAuth = (await response.status) == 200;
     return isAuth;
   } catch (error) {
     console.error("Error fetching expense:", error);

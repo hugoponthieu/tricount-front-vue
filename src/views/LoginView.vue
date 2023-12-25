@@ -50,11 +50,18 @@ const email = ref("");
 const password = ref("");
 const getAuth = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/login/${email.value}`, {
-      method: "POST",
-      body: { pwd: password.value },
-    });
-    const data = await response.json();
+    const response = await fetch(
+      `http://localhost:3000/user/login/${email.value}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pwd: password.value }),
+      }
+    );
+    console.log(response.status);
+    const data = await response.status;
     return data;
   } catch (error) {
     console.error("Error fetching groups:", error);
