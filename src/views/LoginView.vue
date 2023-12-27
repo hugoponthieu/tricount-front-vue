@@ -34,7 +34,7 @@
             type="button"
             class="btn bg-black text-white"
             style="font-family: 'Gustavo'"
-            v-on:click="getAuth"
+            v-on:click="goToApp"
           >
             Connexion
           </button>
@@ -48,6 +48,13 @@
 import { ref } from "vue";
 const email = ref("");
 const password = ref("");
+import { useRouter } from "vue-router";
+const router = useRouter();
+const goToApp = async () => {
+  if (await getAuth()) {
+    router.push({ name: "app" });
+  }
+};
 const getAuth = async () => {
   try {
     const response = await fetch(
