@@ -57,6 +57,7 @@ const getAuth = async () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ pwd: password.value }),
       }
     );
