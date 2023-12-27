@@ -5,9 +5,6 @@
         <p class="logo">YourCount</p>
         <nav>
           <div class="row">
-            <router-link v-if="isAuth" v-bind:to="{ name: 'login' }"
-              >login</router-link
-            >
             <router-link v-bind:to="{ name: 'home' }">home</router-link>
             <router-link
               v-for="groupe in groups"
@@ -27,8 +24,6 @@
 </template>
 
 <script setup>
-import { store } from "@/store";
-var isAuth = store;
 import { onMounted, ref } from "vue";
 
 const groups = ref([]);
@@ -40,14 +35,12 @@ const getGroups = async () => {
     return data;
   } catch (error) {
     console.error("Error fetching groups:", error);
-    throw error;
   }
 };
 
 onMounted(async () => {
   try {
-    const data = await getGroups();
-    groups.value = data;
+    groups.value = await getGroups();
   } catch (error) {
     console.error("Error setting groups:", error);
   }

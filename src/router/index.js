@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { createRouter, createWebHistory, beforeEach } from "vue-router";
+import { createRouter, createWebHistory, beforeEnter } from "vue-router";
+import { store } from "@/store";
+import { ref } from "vue";
 import HomeView from "../views/HomeView.vue";
 
 const routes = [
@@ -10,29 +12,49 @@ const routes = [
   },
   {
     path: "/",
-    name: "home",
-    component: HomeView,
-  },
-  {
-    path: "/about",
-    name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  },
-  {
-    path: "/groupe/:id/:name",
-    name: "group",
-    component: () => import("@/views/GroupDashboard.vue"),
+    name: "app",
+    component: () => import("@/views/TricountView.vue"),
+    async beforeEnter(to, from) {
+      if (await isAuth()) {
+        return true;
+      } else {
+        return "/login";
+      }
+    },
+    children: [
+      {
+        path: "groupe/:id/:name",
+        name: "group",
+        component: () => import("@/views/GroupDashboard.vue"),
+      },
+      {
+        path: "superHome",
+        name: "home",
+        component: HomeView,
+      },
+    ],
   },
 ];
+async function isAuth() {
+  try {
+    const response = await fetch(`http://localhost:3000/user/auth`, {
+      method: "GET",
+      credentials: "include",
+    });
+    console.log(response.status);
+    const isAuth = (await response.status) == 200;
+    console.log(isAuth);
+    return isAuth;
+  } catch (error) {
+    console.error("Error getting auth:", error);
+    // Re-throw the error to propagate it further if needed
+    return false;
+  }
+}
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-
-// router.beforeEach(async (to, from) => {
-//   router.replace("/login");
-// });
 
 export default router;
