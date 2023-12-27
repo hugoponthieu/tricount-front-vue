@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { createRouter, createWebHistory, beforeEnter } from "vue-router";
-import { store } from "@/store";
-import { ref } from "vue";
 import HomeView from "../views/HomeView.vue";
 
 const routes = [
@@ -35,6 +33,7 @@ const routes = [
     ],
   },
 ];
+
 async function isAuth() {
   try {
     const response = await fetch(`http://localhost:3000/user/auth`, {
