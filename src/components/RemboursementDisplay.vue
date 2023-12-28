@@ -5,7 +5,7 @@
       <div class="card-body">
         <div
           class="container d-flex border-bottom justify-content-between pt-2"
-          v-for="depense in depenses"
+          v-for="depense in remboursements"
           :key="depense.id"
         >
           <div class="row row-cols-1">
@@ -23,30 +23,23 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref } from "vue";
-const depenses = ref([]);
-const props = defineProps({
-  idGroup: Number,
-});
-const getDepenses = async () => {
+import { onMounted, ref } from "vue";
+
+const remboursements = ref([]);
+
+const getRemboursements = async () => {
   try {
-    const response = await fetch(
-      `http://localhost:3000/depense/${props.idGroup}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch("http://localhost:3000/detail/");
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching expense:", error);
-    throw error; // Re-throw the error to propagate it further if needed
+    console.error("Error fetching groups:", error);
   }
 };
+
 onMounted(async () => {
   try {
-    depenses.value = await getDepenses();
+    remboursements.value = await getRemboursements();
   } catch (error) {
     console.error("Error setting groups:", error);
   }
