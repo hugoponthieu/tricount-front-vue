@@ -24,13 +24,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, inject } from "vue";
+const ipAd = inject("ip");
 
 const groups = ref([]);
 
 const getGroups = async () => {
   try {
-    const response = await fetch("http://localhost:3000/groupe");
+    const response = await fetch(`http://${ipAd}:3000/groupe`);
     const data = await response.json();
     return data;
   } catch (error) {

@@ -24,7 +24,8 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref } from "vue";
+import { defineProps, onMounted, ref, inject } from "vue";
+const ipAd = inject("ip");
 const remboursements = ref([]);
 const props = defineProps({
   idGroup: Number,
@@ -33,7 +34,7 @@ const props = defineProps({
 const getRemboursements = async () => {
   try {
     const response = await fetch(
-      `http://localhost:3000/remboursement/detail/${props.idGroup}`
+      `http://${ipAd}:3000/remboursement/detail/${props.idGroup}`
     );
     const data = await response.json();
     return data;
