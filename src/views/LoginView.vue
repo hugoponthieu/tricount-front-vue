@@ -45,11 +45,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, inject } from "vue";
+import { useRouter } from "vue-router";
 const email = ref("");
 const password = ref("");
-import { useRouter } from "vue-router";
 const router = useRouter();
+const ipAd = inject("ip");
 const goToApp = async () => {
   if (await getAuth()) {
     router.push({ name: "app" });
@@ -58,7 +59,7 @@ const goToApp = async () => {
 const getAuth = async () => {
   try {
     const response = await fetch(
-      `http://localhost:3000/user/login/${email.value}`,
+      `http://${ipAd}:3000/user/login/${email.value}`,
       {
         method: "POST",
         headers: {

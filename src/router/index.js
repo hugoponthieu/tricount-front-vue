@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { createRouter, createWebHistory, beforeEnter } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
+import { inject } from "vue";
 import HomeView from "../views/HomeView.vue";
 
 const routes = [
@@ -35,8 +36,9 @@ const routes = [
 ];
 
 async function isAuth() {
+  const ipAd = inject("ip");
   try {
-    const response = await fetch(`http://localhost:3000/user/auth`, {
+    const response = await fetch(`http://${ipAd}:3000/user/auth`, {
       method: "GET",
       credentials: "include",
     });
