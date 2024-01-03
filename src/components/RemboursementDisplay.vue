@@ -1,21 +1,22 @@
 <template>
   <div class="col-md-5">
     <div class="card">
-      <div class="card-header simple-text">Liste des dépenses</div>
+      <div class="card-header simple-text">Remboursements</div>
       <div class="card-body">
         <div
           class="container d-flex border-bottom justify-content-between pt-2"
-          v-for="depense in remboursements"
-          :key="depense.id"
+          v-for="remboursement in remboursements"
+          :key="remboursement.id"
         >
-          <div class="row row-cols-1">
-            <div class="col simple-text">
-              {{ depense.description }}
-            </div>
-            <div class="col">{{ depense.utilisateur }}</div>
+          <div class="col little-text">
+            {{ remboursement.emprunteur.split("@")[0] }}
           </div>
-
-          <p class="little-text">{{ depense.montant }}</p>
+          <div class="col little-text">doit</div>
+          <div class="col simple-text">{{ remboursement.total }}</div>
+          <div class="col little-text">à</div>
+          <div class="col little-text">
+            {{ remboursement.utilisateur.split("@")[0] }}
+          </div>
         </div>
       </div>
     </div>
@@ -23,13 +24,17 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-
+import { defineProps, onMounted, ref } from "vue";
 const remboursements = ref([]);
+const props = defineProps({
+  idGroup: Number,
+});
 
 const getRemboursements = async () => {
   try {
-    const response = await fetch("http://localhost:3000/detail/");
+    const response = await fetch(
+      `http://localhost:3000/remboursement/detail/${props.idGroup}`
+    );
     const data = await response.json();
     return data;
   } catch (error) {

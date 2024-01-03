@@ -1,10 +1,12 @@
 <template>
-  <div class="col">
+  <div class="container flex-column">
     <p class="container mt-2 medium-text">
       {{ $route.params.name }} {{ $route.params.id }}
     </p>
+    <div class="row mb-5"><TotalDepenseUser /></div>
     <div class="row">
-      <DepenseDisplay :idGroup="$route.params.id" />
+      <DepenseDisplay :idGroup="Number(route.params.id)" />
+      <RemboursementDisplay :idGroup="Number($route.params.id)" />
       <div class="col-md-5"></div>
     </div>
   </div>
@@ -14,6 +16,8 @@
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import DepenseDisplay from "@/components/DepenseDisplay.vue";
+import RemboursementDisplay from "@/components/RemboursementDisplay.vue";
+import TotalDepenseUser from "@/components/TotalDepenseUser.vue";
 
 const route = useRoute();
 const groupeId = route.params.id;
