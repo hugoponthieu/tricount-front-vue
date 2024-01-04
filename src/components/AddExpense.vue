@@ -20,14 +20,53 @@
           ></button>
         </div>
         <div class="modal-body row">
-          <div class="col-6"></div>
+          <div class="col-6">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-default"
+                >Titre</span
+              >
+              <input type="text" class="form-control" v-model="titre" />
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-default"
+                >Montant</span
+              >
+              <input
+                type="text"
+                inputmode="numeric"
+                class="form-control"
+                v-model="montant"
+                pattern="[0-9]"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="payingUser">Payé par</span>
+              <select class="form-select" id="payingUser" v-model="payingUser">
+                <option
+                  v-for:="membre in membres"
+                  :key="membre.utilisateur"
+                  :value="membre.utilisateur"
+                >
+                  {{ membre.utilisateur.split("@")[0] }}
+                </option>
+              </select>
+            </div>
+          </div>
           <div class="col-6">
             <div
               class="container d-flex border-bottom justify-content-between pt-2"
               v-for:="membre in membres"
               :key="membre.utilisateur"
             >
-              {{ membre.utilisateur }}
+              <label for="membre.utilisateur">{{
+                membre.utilisateur.split("@")[0]
+              }}</label>
+              <input
+                type="checkbox"
+                :id="membre.utilisateur"
+                :value="membre.utilisateur"
+                v-model="checkedNames"
+              />
             </div>
           </div>
         </div>
@@ -56,7 +95,11 @@
 <script setup>
 import { onMounted, ref, inject } from "vue";
 const ipAd = inject("ip");
-const membres = ref([]);
+const membres = ref(Array);
+const payingUser = ref("");
+const montant = ref(0.0);
+const titre = ref("");
+const checkedNames = ref([]);
 const groupeID = 1;
 const getMembres = async () => {
   try {
