@@ -78,7 +78,13 @@
           >
             Fermer
           </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="postExpenses(payingUser, checkedNames, montant, titre)"
+          >
+            Save changes
+          </button>
         </div>
       </div>
     </div>
@@ -93,17 +99,17 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject } from "vue";
+import { onMounted, ref, inject, defineProps } from "vue";
 const ipAd = inject("ip");
 const membres = ref(Array);
 const payingUser = ref("");
 const montant = ref(0.0);
 const titre = ref("");
 const checkedNames = ref([]);
-const groupeID = 1;
+
 const getMembres = async () => {
   try {
-    const response = await fetch(`http://${ipAd}:3000/membre/${groupeID}`);
+    const response = await fetch(`http://${ipAd}:3000/membre/${props.idGroup}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -111,9 +117,35 @@ const getMembres = async () => {
   }
 };
 
+async function postExpenses(payingUser, reimbursingUsers, montant, titre) {
+  try {
+    await fetch(`http://${ipAd}:3000/depense`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        description: titre,
+        montant: montant,
+        utilisateur: payingUser,
+        idgroupe: props.idGroup,
+      }),
+    });
+  } catch (error) {
+    console.error("Error login:", error);
+    throw error;
+  }
+}
+
+const props = defineProps({
+  idGroup: Number,
+});
+
 onMounted(async () => {
   try {
     membres.value = await getMembres();
+    checkedNames.value = membres.value.map((membre) => membre.utilisateur);
   } catch (error) {
     console.error("Error setting groups:", error);
   }

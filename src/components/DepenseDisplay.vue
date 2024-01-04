@@ -3,7 +3,7 @@
     <div class="card">
       <div class="d-flex card-header simple-text justify-content-between">
         Liste des dépenses
-        <AddExpense />
+        <AddExpense :idGroup="idGroup" />
       </div>
       <div class="card-body">
         <div
