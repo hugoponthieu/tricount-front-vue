@@ -20,7 +20,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">...</div>
+        <div class="modal-body">hey.</div>
         <div class="modal-footer">
           <button
             type="button"
