@@ -1,7 +1,10 @@
 <template>
   <div class="col-md-5">
     <div class="card">
-      <div class="card-header simple-text">Liste des dépenses</div>
+      <div class="d-flex card-header simple-text justify-content-between">
+        Liste des dépenses
+        <AddExpense />
+      </div>
       <div class="card-body">
         <div
           class="container d-flex border-bottom justify-content-between pt-2"
@@ -24,6 +27,7 @@
 
 <script setup>
 import { defineProps, onMounted, ref, inject } from "vue";
+import AddExpense from "./AddExpense.vue";
 const ipAd = inject("ip");
 const depenses = ref([]);
 const props = defineProps({
