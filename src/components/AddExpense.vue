@@ -11,9 +11,12 @@
     >
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Créer une dépense
+          </h1>
           <button
             type="button"
+            @click="resetValues"
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
@@ -73,6 +76,7 @@
         <div class="modal-footer">
           <button
             type="button"
+            @click="resetValues"
             class="btn btn-secondary"
             data-bs-dismiss="modal"
           >
@@ -81,6 +85,7 @@
           <button
             type="button"
             class="btn btn-primary"
+            data-bs-dismiss="modal"
             @click="postExpenses(payingUser, checkedNames, montant, titre)"
           >
             Save changes
@@ -99,14 +104,18 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject, defineProps } from "vue";
+import { onMounted, ref, inject, defineProps, defineEmits } from "vue";
 const ipAd = inject("ip");
 const membres = ref(Array);
 const payingUser = ref("");
 const montant = ref(0.0);
 const titre = ref("");
 const checkedNames = ref([]);
-
+const resetValues = () => {
+  checkedNames.value.values = membres.value.map((membre) => membre.utilisateur);
+  titre.value = "";
+  montant.value = 0.0;
+};
 const getMembres = async () => {
   try {
     const response = await fetch(`http://${ipAd}:3000/membre/${props.idGroup}`);
@@ -116,10 +125,12 @@ const getMembres = async () => {
     console.error("Error fetching membres:", error);
   }
 };
+const emit = defineEmits(["posted"]);
 
 async function postExpenses(payingUser, reimbursingUsers, montant, titre) {
+  var iddepense = Number;
   try {
-    await fetch(`http://${ipAd}:3000/depense`, {
+    const response = await fetch(`http://${ipAd}:3000/depense`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -132,14 +143,41 @@ async function postExpenses(payingUser, reimbursingUsers, montant, titre) {
         idgroupe: props.idGroup,
       }),
     });
+    iddepense = await response.json();
   } catch (error) {
-    console.error("Error login:", error);
+    console.error("Error posting expense:", error);
     throw error;
   }
+  const part = 1 / checkedNames.value.length;
+  checkedNames.value.forEach(async (rUser) => {
+    try {
+      await fetch(`http://${ipAd}:3000/remboursement`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          iddepense: iddepense.id,
+          idgroupe: props.idGroup,
+          utilisateur: rUser,
+          part: part,
+        }),
+      });
+    } catch (error) {
+      console.error("Error posting reimbusement:", error);
+      throw error;
+    }
+  });
+  emit("posted");
+  resetValues;
 }
 
 const props = defineProps({
   idGroup: Number,
+  // rerenderer: {
+  //   type: Function,
+  // },
 });
 
 onMounted(async () => {

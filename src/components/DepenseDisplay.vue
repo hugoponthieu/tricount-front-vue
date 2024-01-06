@@ -1,11 +1,11 @@
 <template>
   <div class="col-md-5">
-    <div class="card">
+    <div class="card h-75">
       <div class="d-flex card-header simple-text justify-content-between">
         Liste des dépenses
-        <AddExpense :idGroup="idGroup" />
+        <AddExpense :idGroup="idGroup" @posted="fetchAddedData" />
       </div>
-      <div class="card-body">
+      <div class="card-body overflow-auto">
         <div
           class="container d-flex border-bottom justify-content-between pt-2"
           v-for="depense in depenses"
@@ -26,13 +26,24 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref, inject } from "vue";
+import { defineProps, onMounted, ref, inject, defineEmits } from "vue";
 import AddExpense from "./AddExpense.vue";
 const ipAd = inject("ip");
 const depenses = ref([]);
 const props = defineProps({
   idGroup: Number,
 });
+const emit = defineEmits(["rendering"]);
+
+async function fetchAddedData() {
+  emit("rendering");
+  try {
+    depenses.value = await getDepenses();
+  } catch (error) {
+    console.error("Error setting groups:", error);
+  }
+}
+
 const getDepenses = async () => {
   try {
     const response = await fetch(
@@ -49,6 +60,7 @@ const getDepenses = async () => {
     throw error; // Re-throw the error to propagate it further if needed
   }
 };
+
 onMounted(async () => {
   try {
     depenses.value = await getDepenses();

@@ -1,6 +1,6 @@
 <template>
   <div class="row min-vh-100">
-    <div class="col-3 bg-black"><TheRightSideNav /></div>
+    <div class="col-3"><TheRightSideNav /></div>
     <div class="col-9"><router-view :key="route.path" /></div>
   </div>
 </template>
