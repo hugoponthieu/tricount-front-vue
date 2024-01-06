@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-5">
-    <div class="card">
+    <div class="card h-75">
       <div class="card-header simple-text">Remboursements</div>
       <div class="card-body">
         <div
@@ -12,7 +12,9 @@
             {{ remboursement.emprunteur.split("@")[0] }}
           </div>
           <div class="col little-text">doit</div>
-          <div class="col simple-text">{{ remboursement.total }}</div>
+          <div class="col simple-text">
+            {{ remboursement.total.toFixed(2) }}
+          </div>
           <div class="col little-text">à</div>
           <div class="col little-text">
             {{ remboursement.utilisateur.split("@")[0] }}
@@ -29,6 +31,9 @@ const ipAd = inject("ip");
 const remboursements = ref([]);
 const props = defineProps({
   idGroup: Number,
+  // rerenderer: {
+  //   type: Function,
+  // },
 });
 
 const getRemboursements = async () => {
