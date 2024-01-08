@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-5">
+  <div class="col">
     <div class="row">
       <div class="container medium-text">Your total</div>
       <div class="d-flex justify-content-center logo">

@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-5">
-    <div class="card h-75">
+    <div class="card mh-100">
       <div class="d-flex card-header simple-text justify-content-between">
         Liste des dépenses
         <AddExpense :idGroup="idGroup" @posted="fetchAddedData" />
