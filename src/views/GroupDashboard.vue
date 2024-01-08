@@ -15,16 +15,8 @@
 import { onUpdated } from "vue";
 import ExpenseReimburse from "@/components/ExpenseReimburse.vue";
 import TotalDepenseUser from "@/components/TotalDepenseUser.vue";
-// const groupeId = route.params.id;
-// const membres = ref([]);
 
 onUpdated(() => {
   console.log("Updated");
 });
-// onMounted(async () => {
-//   try {
-//   } catch (error) {
-//     console.error("Error setting groups:", error);
-//   }
-// });
 </script>

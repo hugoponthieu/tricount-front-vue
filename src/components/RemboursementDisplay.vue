@@ -29,11 +29,11 @@
 import { defineProps, onMounted, ref, inject } from "vue";
 const ipAd = inject("ip");
 const remboursements = ref([]);
+const membres = ref([]);
+const balances = ref({});
+const depenses = ref([]);
 const props = defineProps({
   idGroup: Number,
-  // rerenderer: {
-  //   type: Function,
-  // },
 });
 
 const getRemboursements = async () => {
@@ -48,9 +48,61 @@ const getRemboursements = async () => {
   }
 };
 
+const getMembres = async () => {
+  try {
+    const response = await fetch(`http://${ipAd}:3000/membre/${props.idGroup}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching membres:", error);
+  }
+};
+const getDepenses = async () => {
+  try {
+    const response = await fetch(
+      `http://${ipAd}:3000/depense/${props.idGroup}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching expense:", error);
+    throw error; // Re-throw the error to propagate it further if needed
+  }
+};
+
+const computeBalances = () => {
+  var balancesMap = new Map();
+  var amount;
+  // for (var membre in membres.value) {
+  //   balancesMap.set(membre.utilisateur, 0);
+  // }
+  membres.value.forEach(function (membre) {
+    balancesMap.set(membre.utilisateur, 0);
+  });
+  remboursements.value.forEach(function (remboursement) {
+    amount = balancesMap.get(remboursement.emprunteur);
+    balancesMap.set(remboursement.emprunteur, (amount += remboursement.total));
+  });
+  console.log(balancesMap);
+  amount = 0;
+  depenses.value.forEach(function (depense) {
+    amount = balancesMap.get(depense.utilisateur);
+    balancesMap.set(depense.utilisateur, (amount += -depense.montant));
+  });
+  console.log(balancesMap);
+  return balancesMap;
+};
 onMounted(async () => {
   try {
     remboursements.value = await getRemboursements();
+    membres.value = await getMembres();
+    depenses.value = await getDepenses();
+    balances.value = computeBalances();
+    console.log(balances.value);
   } catch (error) {
     console.error("Error setting groups:", error);
   }
