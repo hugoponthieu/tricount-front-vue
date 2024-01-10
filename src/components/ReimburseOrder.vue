@@ -6,16 +6,38 @@
       </div>
       <div class="card-body overflow-auto">
         <div
-          class="container d-flex border-bottom justify-content-between pt-2"
+          class="row justify-content-around align-content-center pt-2 border-bottom"
+          v-for="rOrder in props.reimburseOrders"
+          :key="rOrder.paying"
         >
-          <div class="row row-cols-1">
-            <div class="col simple-text">hey</div>
-            <div class="col">hey</div>
+          <div class="col-6">
+            <div class="row simple-text">
+              {{ rOrder.getting.split("@")[0] }}
+            </div>
+            <div class="row pt-1">doit à</div>
+            <div class="row simple-text pb-1">
+              {{ rOrder.paying.split("@")[0] }}
+            </div>
           </div>
 
-          <p class="little-text">hey</p>
+          <div
+            class="col-5 d-flex little-text justify-content-end align-items-center"
+          >
+            {{ rOrder.amount.toFixed(2) }}
+          </div>
+          <footer class="bg-body-secondary d-flex justify-content-center">
+            <AddExpense :idGroup="route.params.id" />
+          </footer>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { defineProps } from "vue";
+import { useRoute } from "vue-router";
+import AddExpense from "@/components/AddExpense.vue";
+const props = defineProps(["reimburseOrders"]);
+const route = useRoute();
+</script>
