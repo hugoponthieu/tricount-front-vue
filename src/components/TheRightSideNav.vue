@@ -1,22 +1,22 @@
 <template>
   <div class="d-flex min-vh-100 justify-content-md-start">
-    <div class="card container-fluid">
-      <div class="col">
-        <p class="logo">YourCount</p>
+    <div class="card container-fluid justify-content-center">
+      <p class="logo">YourCount</p>
+      <AddGroupe />
+      <div class="col d-flex justify-content-center">
         <nav>
-          <div class="row">
-            <router-link v-bind:to="{ name: 'home' }">home</router-link>
-            <router-link
-              v-for="groupe in groups"
-              :key="groupe.id"
-              v-bind:to="{
-                name: 'group',
-                params: { id: groupe.id, name: groupe.nom },
-              }"
-            >
-              <p class="medium-text card">{{ groupe.nom }}</p>
-            </router-link>
-          </div>
+          <router-link
+            v-for="groupe in groups"
+            :key="groupe.id"
+            v-bind:to="{
+              name: 'group',
+              params: { id: groupe.id, name: groupe.nom },
+            }"
+          >
+            <div class="card text-center medium-text mt-2">
+              {{ groupe.nom }}
+            </div>
+          </router-link>
         </nav>
       </div>
     </div>
@@ -25,6 +25,7 @@
 
 <script setup>
 import { onMounted, ref, inject } from "vue";
+import AddGroupe from "./AddGroupe.vue";
 const ipAd = inject("ip");
 
 const groups = ref([]);
