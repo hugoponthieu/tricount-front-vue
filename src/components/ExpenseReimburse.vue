@@ -1,6 +1,6 @@
 <template>
   <BalancesDisplay :balances="balances" />
-  <ReimburseOrder />
+  <ReimburseOrder :reimburseOrders="reimburseOrders" />
 </template>
 
 <script setup>
@@ -63,13 +63,13 @@ const computeBalances = () => {
     balancesMap.set(membre.utilisateur, 0);
   });
   remboursements.value.forEach(function (remboursement) {
-    amount = balancesMap.get(remboursement.emprunteur);
-    balancesMap.set(remboursement.emprunteur, (amount += remboursement.total));
+    amount = -balancesMap.get(remboursement.emprunteur);
+    balancesMap.set(remboursement.emprunteur, -(amount += remboursement.total));
   });
 
   amount = 0;
   depenses.value.forEach(function (depense) {
-    amount = -balancesMap.get(depense.utilisateur);
+    amount = balancesMap.get(depense.utilisateur);
     balancesMap.set(depense.utilisateur, (amount += depense.montant));
   });
 
@@ -88,45 +88,9 @@ const computeReimbursements = () => {
     }
   });
   gettingMap = new Map([...gettingMap.entries()].sort((a, b) => b[1] - a[1]));
-  // console.log(gettingMap);
-  // console.log(payingMap);
-  // var splittedRem = 0;
-  // var splittedRemUser = "";
-  // for (let getRem of gettingMap.entries()) {
-  //   let moneyToGet = getRem[1];
-  //   do {
-  //     // console.logbreak;(payingMap);
-  //     for (let rem of payingMap.entries()) {
-  //       console.log(rem[0], moneyToGet, rem[1], getRem[0]);
-  //       if (moneyToGet + rem[1] >= 0) {
-  //         moneyToGet = moneyToGet + rem[1];
-  //         remboursementOrder.push({
-  //           paying: rem[0],
-  //           getting: getRem[0],
-  //           amount: -rem[1],
-  //         });
-  //         // console.log(remboursementOrder);
-  //         payingMap.delete(rem[0]);
-  //       } else {
-  //         payingMap.set(rem[0], moneyToGet + rem[1]);
-  //         remboursementOrder.push({
-  //           paying: rem[0],
-  //           getting: getRem[0],
-  //           amount: moneyToGet,
-  //         });
-  //         break;
-  //       }
-  //     }
-  //     console.log(moneyToGet > 0.001);
-  //     console.log(moneyToGet);
-  //     break;
-  //   } while (moneyToGet > 0.001);
-  // }
+
   for (let getRem of gettingMap.entries()) {
     let moneyToGet = getRem[1];
-
-    // console.logbreak;(payingMap);
-    // for (let rem of payingMap.entries())
     let it = payingMap.entries();
     let rem = null;
     const ntm = () => {
@@ -139,24 +103,23 @@ const computeReimbursements = () => {
       if (moneyToGet + rem[1] >= 0) {
         moneyToGet = moneyToGet + rem[1];
         remboursementOrder.push({
-          paying: rem[0],
-          getting: getRem[0],
+          paying: getRem[0],
+          getting: rem[0],
           amount: -rem[1],
         });
-        // console.log(remboursementOrder);
         payingMap.delete(rem[0]);
       } else {
         payingMap.set(rem[0], moneyToGet + rem[1]);
         remboursementOrder.push({
-          paying: rem[0],
-          getting: getRem[0],
+          paying: getRem[0],
+          getting: rem[0],
           amount: moneyToGet,
         });
         moneyToGet = 0;
       }
     }
   }
-  console.log(remboursementOrder);
+  return remboursementOrder;
 };
 onMounted(async () => {
   try {
