@@ -30,7 +30,7 @@
               >
               <input type="text" class="form-control" v-model="titre" />
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 overflow-auto">
               <span class="input-group-text" id="inputGroup-sizing-default"
                 >Montant</span
               >
@@ -170,14 +170,11 @@ async function postExpenses(payingUser, reimbursingUsers, montant, titre) {
     }
   });
   emit("posted");
-  resetValues;
+  resetValues();
 }
 
 const props = defineProps({
   idGroup: Number,
-  // rerenderer: {
-  //   type: Function,
-  // },
 });
 
 onMounted(async () => {
