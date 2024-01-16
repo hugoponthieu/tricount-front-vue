@@ -70,7 +70,7 @@ const getAuth = async () => {
       }
     );
     console.log(response.status);
-    const data = await response.status;
+    const data = response.status;
     return data;
   } catch (error) {
     console.error("Error fetching groups:", error);
