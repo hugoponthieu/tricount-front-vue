@@ -53,13 +53,13 @@
       </div>
     </div>
   </div>
-  <div class="col-md-5">
-    <div class="card mh-100">
+  <div class="col-md-5 pt-2">
+    <div class="card h-75">
       <div class="d-flex card-header simple-text justify-content-between">
         Liste des dépenses
         <AddExpense :idGroup="Number(idGroup)" @posted="fetchAddedData" />
       </div>
-      <div class="card-body overflow-auto">
+      <div class="card-body h-50 overflow-scroll">
         <div
           class="container d-flex border-bottom justify-content-between pt-2"
           v-for="depense in depenses"

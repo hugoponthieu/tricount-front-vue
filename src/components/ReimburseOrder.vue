@@ -1,10 +1,10 @@
 <template>
-  <div class="col-md-5 h-75">
-    <div class="card">
+  <div class="col-md-5">
+    <div class="card h-75">
       <div class="d-flex card-header simple-text justify-content-between">
         Détails des remboursements
       </div>
-      <div class="card-body overflow-auto">
+      <div class="card-body overflow-scroll">
         <div
           class="row justify-content-around align-content-center pt-2 border-bottom"
           v-for="rOrder in props.reimburseOrders"
