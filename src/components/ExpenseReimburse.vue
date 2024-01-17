@@ -21,7 +21,14 @@ const props = defineProps({
 const getRemboursements = async () => {
   try {
     const response = await fetch(
-      `http://${ipAd}:3000/remboursement/detail/${props.idGroup}`
+      `http://${ipAd}:3000/remboursement/detail/${props.idGroup}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
     );
     const data = await response.json();
     return data;
@@ -32,7 +39,16 @@ const getRemboursements = async () => {
 
 const getMembres = async () => {
   try {
-    const response = await fetch(`http://${ipAd}:3000/membre/${props.idGroup}`);
+    const response = await fetch(
+      `http://${ipAd}:3000/membre/${props.idGroup}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -99,7 +115,6 @@ const computeReimbursements = () => {
       return !temp.done;
     };
     while (ntm() && moneyToGet > 0.001) {
-      console.log(moneyToGet, rem);
       if (moneyToGet + rem[1] >= 0) {
         moneyToGet = moneyToGet + rem[1];
         remboursementOrder.push({

@@ -59,7 +59,7 @@ const goToApp = async () => {
 const getAuth = async () => {
   try {
     const response = await fetch(
-      `http://${ipAd}:3000/user/login/${email.value}`,
+      `http://${ipAd}:3000/access/login/${email.value}`,
       {
         method: "POST",
         headers: {

@@ -2,8 +2,12 @@
   <div class="d-flex min-vh-100 justify-content-md-start">
     <div class="card container-fluid justify-content-center">
       <p class="logo">YourCount</p>
-      <AddGroupe />
-      <div class="col d-flex justify-content-center">
+      <AddGroupe @posted="forceRerender" />
+      <div
+        class="col d-flex justify-content-center"
+        @posted="fetchAddedData"
+        :key="componentKey"
+      >
         <nav>
           <router-link
             v-for="groupe in groups"
@@ -27,12 +31,23 @@
 import { onMounted, ref, inject } from "vue";
 import AddGroupe from "./AddGroupe.vue";
 const ipAd = inject("ip");
-
 const groups = ref([]);
+const componentKey = ref(0);
+
+const forceRerender = async () => {
+  componentKey.value += 1;
+  groups.value = await getGroups();
+};
 
 const getGroups = async () => {
   try {
-    const response = await fetch(`http://${ipAd}:3000/groupe`);
+    const response = await fetch(`http://${ipAd}:3000/groupe`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
     const data = await response.json();
     return data;
   } catch (error) {

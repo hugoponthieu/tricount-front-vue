@@ -71,16 +71,59 @@
 </template>
 
 <script setup>
-import { ref, inject } from "vue";
+import { ref, inject, defineEmits } from "vue";
 const ipAd = inject("ip");
 const groupName = ref("");
+const emit = defineEmits(["posted"]);
 async function postGroup() {
+  let currentUser;
+  let idNouvGroupe;
   try {
-    await fetch(`http://${ipAd}:3000/groupe/${groupName.value}`, {
+    const response = await fetch(`http://${ipAd}:3000/user/current`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const responseOBJ = await response.json();
+    currentUser = responseOBJ["user"];
+    console.log(currentUser);
+  } catch (error) {
+    console.error("Error fetching membres:", error);
+  }
+  try {
+    const response = await fetch(`http://${ipAd}:3000/groupe`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        nom: groupName.value,
+      }),
+    });
+    const data = await response.json();
+    idNouvGroupe = data[0]["id"];
+  } catch (error) {
+    console.error("Error fetching membres:", error);
+  }
+  try {
+    await fetch(`http://${ipAd}:3000/membre`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        idgroupe: idNouvGroupe,
+        utilisateur: currentUser,
+      }),
     });
   } catch (error) {
     console.error("Error fetching membres:", error);
   }
+  groupName.value = "";
+  emit("posted");
 }
 </script>
