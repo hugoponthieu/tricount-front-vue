@@ -118,7 +118,16 @@ const resetValues = () => {
 };
 const getMembres = async () => {
   try {
-    const response = await fetch(`http://${ipAd}:3000/membre/${props.idGroup}`);
+    const response = await fetch(
+      `http://${ipAd}:3000/membre/${props.idGroup}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {

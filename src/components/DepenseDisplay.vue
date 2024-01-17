@@ -3,7 +3,7 @@
     <div class="card mh-100">
       <div class="d-flex card-header simple-text justify-content-between">
         Liste des dépenses
-        <AddExpense :idGroup="idGroup" @posted="fetchAddedData" />
+        <AddExpense :idGroup="Number(idGroup)" @posted="fetchAddedData" />
       </div>
       <div class="card-body overflow-auto">
         <div

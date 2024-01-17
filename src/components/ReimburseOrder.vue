@@ -26,7 +26,7 @@
             {{ rOrder.amount.toFixed(2) }}
           </div>
           <footer class="bg-body-secondary d-flex justify-content-center">
-            <AddExpense :idGroup="route.params.id" />
+            <AddExpense :idGroup="Number(route.params.id)" />
           </footer>
         </div>
       </div>
