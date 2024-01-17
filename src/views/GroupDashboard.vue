@@ -3,7 +3,7 @@
     <div class="row mb-5 mh-50 pt-5">
       <div class="col-5">
         <div class="logo pb-3">{{ route.params.name }}</div>
-        <TotalDepenseUser />
+        <TotalDepenseUser :key="componentKey" />
       </div>
       <DepenseDisplay
         :idGroup="Number(route.params.id)"
