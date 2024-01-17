@@ -38,3 +38,9 @@
     font-family: Gustavo;
     font-size: xxx-large;
 }
+
+.link
+{
+   text-decoration: none; 
+   background-color: none;
+}

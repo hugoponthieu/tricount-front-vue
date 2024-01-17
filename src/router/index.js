@@ -42,13 +42,11 @@ async function isAuth() {
       method: "GET",
       credentials: "include",
     });
-    console.log(response.status);
     const isAuth = (await response.status) == 200;
     console.log(isAuth);
     return isAuth;
   } catch (error) {
     console.error("Error getting auth:", error);
-    // Re-throw the error to propagate it further if needed
     return false;
   }
 }
