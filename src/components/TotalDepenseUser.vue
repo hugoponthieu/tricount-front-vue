@@ -18,13 +18,10 @@ const ipAd = inject("ip");
 const total = ref(0);
 const getDepenses = async () => {
   try {
-    const response = await fetch(
-      `http://${ipAd}:3000/depense/${route.params.id}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`http://${ipAd}/depense/${route.params.id}`, {
+      method: "GET",
+      credentials: "include",
+    });
     const data = await response.json();
     return data;
   } catch (error) {

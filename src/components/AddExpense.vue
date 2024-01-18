@@ -118,16 +118,13 @@ const resetValues = () => {
 };
 const getMembres = async () => {
   try {
-    const response = await fetch(
-      `http://${ipAd}:3000/membre/${props.idGroup}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`http://${ipAd}/membre/${props.idGroup}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
     const data = await response.json();
     return data;
   } catch (error) {
@@ -139,7 +136,7 @@ const emit = defineEmits(["posted"]);
 async function postExpenses(payingUser, reimbursingUsers, montant, titre) {
   var iddepense = Number;
   try {
-    const response = await fetch(`http://${ipAd}:3000/depense`, {
+    const response = await fetch(`http://${ipAd}/depense`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -160,7 +157,7 @@ async function postExpenses(payingUser, reimbursingUsers, montant, titre) {
   const part = 1 / checkedNames.value.length;
   checkedNames.value.forEach(async (rUser) => {
     try {
-      await fetch(`http://${ipAd}:3000/remboursement`, {
+      await fetch(`http://${ipAd}/remboursement`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
