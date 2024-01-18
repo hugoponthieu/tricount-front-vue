@@ -1,19 +1,20 @@
 <template>
   <BalancesDisplay :balances="balances" />
-  <ReimburseOrder :reimburseOrders="reimburseOrders" />
+  <ReimburseOrder :reimburseOrders="reimburseOrders" @posted="emit('fetch')" />
 </template>
 
 <script setup>
 import ReimburseOrder from "./ReimburseOrder.vue";
 import BalancesDisplay from "./BalancesDisplay.vue";
 
-import { defineProps, onMounted, ref, inject } from "vue";
+import { defineProps, onMounted, ref, inject, defineEmits } from "vue";
 const ipAd = inject("ip");
 const remboursements = ref([]);
 const membres = ref([]);
 const balances = ref({});
 const depenses = ref([]);
 const reimburseOrders = ref([]);
+const emit = defineEmits(["fetch"]);
 const props = defineProps({
   idGroup: Number,
 });

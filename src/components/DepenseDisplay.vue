@@ -100,10 +100,11 @@ const selectDepenseID = async (depID) => {
   for (let depense of depenses.value) {
     if (depense.id == depID) {
       selectedDepenseObj.value = depense;
-      console.log(selectedDepenseObj.value);
       return;
     }
   }
+  const montant = selectedDepenseObj.value.montant.toFixed(2);
+  selectedDepenseObj.value.montant = montant;
 };
 
 const props = defineProps({

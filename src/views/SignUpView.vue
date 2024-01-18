@@ -26,6 +26,16 @@
             id="passwordInput"
             v-model="password"
           />
+          <label class="sr-only text-regular" for="inlineFormInput">nom</label>
+          <input class="form-control" v-model="nom" />
+          <label class="sr-only text-regular" for="inlineFormInput"
+            >prenom</label
+          >
+          <input class="form-control" v-model="prenom" />
+          <label class="sr-only text-regular" for="inlineFormInput"
+            >pseudo</label
+          >
+          <input class="form-control" v-model="pseudonyme" />
         </div>
       </div>
       <div class="card-footer">
@@ -34,15 +44,7 @@
             type="button"
             class="btn bg-black text-white"
             style="font-family: 'Gustavo'"
-            v-on:click="goToApp"
-          >
-            Connexion
-          </button>
-          <button
-            type="button"
-            class="btn bg-black text-white"
-            style="font-family: 'Gustavo'"
-            v-on:click="goToSignup"
+            v-on:click="signUp(), goToApp()"
           >
             SignUp
           </button>
@@ -57,16 +59,17 @@ import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
 const email = ref("");
 const password = ref("");
+const nom = ref("");
+const prenom = ref("");
+const pseudonyme = ref("");
 const router = useRouter();
 const ipAd = inject("ip");
 const goToApp = async () => {
   if (await getAuth()) {
-    router.push({ name: "app" });
+    router.push({ name: "login" });
   }
 };
-const goToSignup = async () => {
-  router.push({ name: "signup" });
-};
+
 const getAuth = async () => {
   try {
     const response = await fetch(`http://${ipAd}/access/login/${email.value}`, {
@@ -78,6 +81,30 @@ const getAuth = async () => {
       body: JSON.stringify({ pwd: password.value }),
     });
     console.log(response.status);
+    const data = response.status;
+    return data;
+  } catch (error) {
+    console.error("Error fetching groups:", error);
+    throw error;
+  }
+};
+
+const signUp = async () => {
+  try {
+    const response = await fetch(`http://${ipAd}/access/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        email: email.value,
+        nom: nom.value,
+        prenom: prenom.value,
+        pseudonyme: pseudonyme.value,
+        pwd: password.value,
+      }),
+    });
     const data = response.status;
     return data;
   } catch (error) {

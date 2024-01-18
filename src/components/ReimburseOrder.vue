@@ -38,7 +38,14 @@
           >
             Fermer
           </button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click="
+              postReim(crudROrder.getting, crudROrder.paying, crudROrder.amount)
+            "
+          >
             Rembourser
           </button>
         </div>
@@ -88,14 +95,65 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, ref, inject, defineEmits } from "vue";
+import { useRoute } from "vue-router";
+const ipAd = inject("ip");
+const emit = defineEmits(["posted"]);
+const route = useRoute();
 const props = defineProps(["reimburseOrders"]);
 const selectedROrder = ref([]);
+const crudROrder = ref([]);
 const selectROrder = (rOrder) => {
+  crudROrder.value = rOrder;
   const getting = rOrder.getting.split("@")[0];
   const paying = rOrder.paying.split("@")[0];
   selectedROrder.value.getting = getting;
   selectedROrder.value.paying = paying;
   selectedROrder.value.amount = rOrder.amount.toFixed(2);
 };
+
+async function postReim(payingUser, reimbursingUsers, montant) {
+  let iddepense;
+  const titre = "Remboursement";
+  try {
+    const response = await fetch(`http://${ipAd}/depense`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        description: titre,
+        montant: montant,
+        utilisateur: payingUser,
+        idgroupe: route.params.id,
+      }),
+    });
+    iddepense = await response.json();
+  } catch (error) {
+    console.error("Error posting expense:", error);
+    throw error;
+  }
+  const part = 1;
+
+  try {
+    await fetch(`http://${ipAd}/remboursement`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        iddepense: iddepense.id,
+        idgroupe: route.params.id,
+        utilisateur: reimbursingUsers,
+        part: part,
+      }),
+    });
+  } catch (error) {
+    console.error("Error posting reimbusement:", error);
+    throw error;
+  }
+  emit("posted");
+}
 </script>
