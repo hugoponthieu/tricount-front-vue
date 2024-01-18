@@ -16,7 +16,6 @@
           </h1>
           <button
             type="button"
-            @click="console.log('hey')"
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
@@ -41,7 +40,6 @@
         <div class="modal-footer">
           <button
             type="button"
-            @click="console.log('hey')"
             class="btn btn-secondary"
             data-bs-dismiss="modal"
           >
@@ -87,7 +85,6 @@ async function postGroup() {
     });
     const responseOBJ = await response.json();
     currentUser = responseOBJ["user"];
-    console.log(currentUser);
   } catch (error) {
     console.error("Error fetching membres:", error);
   }

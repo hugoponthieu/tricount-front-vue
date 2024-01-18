@@ -1,18 +1,9 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div
+    class="container min-vh-100 text-center medium-text d-flex align-items-center"
+  >
+    <div class="align-self-center">
+      Bienvenue sur YourCount pour commencer sélectionnez ou ajoutez un groupe
+    </div>
   </div>
 </template>
-
-<script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
-export default {
-  name: "HomeView",
-  components: {
-    HelloWorld,
-  },
-};
-</script>

@@ -66,7 +66,6 @@ const router = useRouter();
 const ipAd = inject("ip");
 const goToLogin = async () => {
   router.push({ name: "login" });
-  console.log("hey");
 };
 
 const signUp = async () => {
