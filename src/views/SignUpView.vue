@@ -44,7 +44,7 @@
             type="button"
             class="btn bg-black text-white"
             style="font-family: 'Gustavo'"
-            v-on:click="signUp(), goToApp()"
+            v-on:click="signUp()"
           >
             SignUp
           </button>
@@ -64,34 +64,14 @@ const prenom = ref("");
 const pseudonyme = ref("");
 const router = useRouter();
 const ipAd = inject("ip");
-const goToApp = async () => {
-  if (await getAuth()) {
-    router.push({ name: "login" });
-  }
-};
-
-const getAuth = async () => {
-  try {
-    const response = await fetch(`http://${ipAd}/access/login/${email.value}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ pwd: password.value }),
-    });
-    console.log(response.status);
-    const data = response.status;
-    return data;
-  } catch (error) {
-    console.error("Error fetching groups:", error);
-    throw error;
-  }
+const goToLogin = async () => {
+  router.push({ name: "login" });
+  console.log("hey");
 };
 
 const signUp = async () => {
   try {
-    const response = await fetch(`http://${ipAd}/access/signup`, {
+    await fetch(`http://${ipAd}/access/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,11 +85,9 @@ const signUp = async () => {
         pwd: password.value,
       }),
     });
-    const data = response.status;
-    return data;
   } catch (error) {
     console.error("Error fetching groups:", error);
-    throw error;
   }
+  goToLogin();
 };
 </script>
