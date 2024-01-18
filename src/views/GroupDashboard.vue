@@ -16,6 +16,7 @@
       <ExpenseReimburse
         :idGroup="Number(route.params.id)"
         :key="componentKey"
+        @fetch="forceRerender"
       />
     </div>
   </div>
