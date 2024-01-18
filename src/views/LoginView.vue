@@ -58,17 +58,14 @@ const goToApp = async () => {
 };
 const getAuth = async () => {
   try {
-    const response = await fetch(
-      `http://${ipAd}:3000/access/login/${email.value}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ pwd: password.value }),
-      }
-    );
+    const response = await fetch(`http://${ipAd}/access/login/${email.value}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ pwd: password.value }),
+    });
     console.log(response.status);
     const data = response.status;
     return data;

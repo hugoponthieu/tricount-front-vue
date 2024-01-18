@@ -21,7 +21,7 @@ const props = defineProps({
 const getRemboursements = async () => {
   try {
     const response = await fetch(
-      `http://${ipAd}:3000/remboursement/detail/${props.idGroup}`,
+      `http://${ipAd}/remboursement/detail/${props.idGroup}`,
       {
         method: "GET",
         headers: {
@@ -39,16 +39,13 @@ const getRemboursements = async () => {
 
 const getMembres = async () => {
   try {
-    const response = await fetch(
-      `http://${ipAd}:3000/membre/${props.idGroup}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`http://${ipAd}/membre/${props.idGroup}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
     const data = await response.json();
     return data;
   } catch (error) {
@@ -57,13 +54,10 @@ const getMembres = async () => {
 };
 const getDepenses = async () => {
   try {
-    const response = await fetch(
-      `http://${ipAd}:3000/depense/${props.idGroup}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`http://${ipAd}/depense/${props.idGroup}`, {
+      method: "GET",
+      credentials: "include",
+    });
     const data = await response.json();
     return data;
   } catch (error) {

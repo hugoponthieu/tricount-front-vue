@@ -38,7 +38,7 @@ const routes = [
 async function isAuth() {
   const ipAd = inject("ip");
   try {
-    const response = await fetch(`http://${ipAd}:3000/user/auth`, {
+    const response = await fetch(`http://${ipAd}/user/auth`, {
       method: "GET",
       credentials: "include",
     });
