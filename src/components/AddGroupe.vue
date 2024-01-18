@@ -33,7 +33,6 @@
                 v-model="groupName"
                 inputmode="numeric"
                 class="form-control"
-                pattern="[0-9]"
               />
             </div>
           </div>

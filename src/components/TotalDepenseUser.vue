@@ -2,7 +2,9 @@
   <div class="col">
     <div class="row">
       <div class="container medium-text">Your total</div>
-      <div class="col d-flex justify-content-center logo">{{ total }} €</div>
+      <div class="col d-flex justify-content-center logo">
+        {{ total.toFixed(2) }} €
+      </div>
     </div>
   </div>
 </template>
@@ -34,7 +36,9 @@ onMounted(async () => {
   try {
     depenses.value = await getDepenses();
     depenses.value.forEach((depense) => {
-      total.value += depense.montant;
+      if (depense.description != "Remboursment") {
+        total.value += depense.montant;
+      }
     });
   } catch (error) {
     console.error("Error setting:", error);
