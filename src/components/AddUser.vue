@@ -29,9 +29,9 @@
               >
               <input
                 type="text"
+                v-model="newUserEmail"
                 inputmode="numeric"
                 class="form-control"
-                pattern="[0-9]"
               />
             </div>
           </div>
@@ -44,7 +44,9 @@
           >
             Close
           </button>
-          <button type="button" class="btn btn-primary">Ajouter</button>
+          <button type="button" @click="postMembre()" class="btn btn-primary">
+            Ajouter
+          </button>
         </div>
       </div>
     </div>
@@ -58,4 +60,29 @@
   </button>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, inject, defineEmits } from "vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
+const ipAd = inject("ip");
+const emit = defineEmits(["posted"]);
+const newUserEmail = ref("");
+const postMembre = async () => {
+  try {
+    await fetch(`http://${ipAd}:3000/membre/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        idgroupe: route.params.id,
+        utilisateur: newUserEmail.value,
+      }),
+    });
+  } catch (error) {
+    console.error("Error fetching membres:", error);
+  }
+  emit("posted");
+};
+</script>

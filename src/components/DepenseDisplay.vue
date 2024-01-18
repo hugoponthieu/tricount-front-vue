@@ -53,7 +53,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-5 pt-2">
+  <div class="col-md-5 mt-2">
     <div class="card h-75">
       <div class="d-flex card-header simple-text justify-content-between">
         Liste des dépenses

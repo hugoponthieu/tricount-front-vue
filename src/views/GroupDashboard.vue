@@ -4,7 +4,7 @@
       <div class="col-5">
         <div class="logo">{{ route.params.name }}</div>
         <TotalDepenseUser :key="componentKey" />
-        <AddUser />
+        <AddUser @posted="forceRerender" />
       </div>
       <DepenseDisplay
         :idGroup="Number(route.params.id)"
