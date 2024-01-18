@@ -77,7 +77,7 @@ const getAuth = async () => {
       credentials: "include",
       body: JSON.stringify({ pwd: password.value }),
     });
-    console.log(response.status);
+
     const data = response.status;
     return data;
   } catch (error) {

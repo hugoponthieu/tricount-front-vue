@@ -44,7 +44,12 @@
           >
             Close
           </button>
-          <button type="button" @click="postMembre()" class="btn btn-primary">
+          <button
+            type="button"
+            @click="postMembre()"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+          >
             Ajouter
           </button>
         </div>

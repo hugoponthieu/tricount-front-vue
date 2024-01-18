@@ -6,7 +6,12 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import TheRightSideNav from "@/components/TheRightSideNav.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
+const router = useRouter();
+onMounted(() => {
+  router.push({ name: "home" });
+});
 </script>

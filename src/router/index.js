@@ -32,7 +32,7 @@ const routes = [
         component: () => import("@/views/GroupDashboard.vue"),
       },
       {
-        path: "superHome",
+        path: "/home",
         name: "home",
         component: HomeView,
       },

@@ -69,7 +69,7 @@
             <div class="col">
               <button
                 type="button"
-                @click="selectDepenseID(depense.id)"
+                @click="selectDepense(depense)"
                 class="btn-close"
                 data-bs-toggle="modal"
                 data-bs-target="#depense"
@@ -93,18 +93,13 @@ import { defineProps, onMounted, ref, inject, defineEmits } from "vue";
 import AddExpense from "./AddExpense.vue";
 const ipAd = inject("ip");
 const depenses = ref([]);
-const selectedDepenseID = ref(0);
+
 const selectedDepenseObj = ref({});
-const selectDepenseID = async (depID) => {
-  selectedDepenseID.value = await depID;
-  for (let depense of depenses.value) {
-    if (depense.id == depID) {
-      selectedDepenseObj.value = depense;
-      return;
-    }
-  }
-  const montant = selectedDepenseObj.value.montant.toFixed(2);
-  selectedDepenseObj.value.montant = montant;
+const selectDepense = async (depense) => {
+  selectedDepenseObj.value.id = depense.id;
+  selectedDepenseObj.value.description = depense.description;
+  selectedDepenseObj.value.utilisateur = depense.utilisateur;
+  selectedDepenseObj.value.montant = depense.montant.toFixed(2);
 };
 
 const props = defineProps({
@@ -137,7 +132,7 @@ const getDepenses = async () => {
 
 const deleteDepenses = async () => {
   try {
-    await fetch(`http://${ipAd}/depense/${selectedDepenseID.value}`, {
+    await fetch(`http://${ipAd}/depense/${selectedDepenseObj.value.id}`, {
       method: "DELETE",
       credentials: "include",
     });

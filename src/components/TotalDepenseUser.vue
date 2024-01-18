@@ -33,7 +33,7 @@ onMounted(async () => {
   try {
     depenses.value = await getDepenses();
     depenses.value.forEach((depense) => {
-      if (depense.description != "Remboursment") {
+      if (depense.description != "Remboursement") {
         total.value += depense.montant;
       }
     });
