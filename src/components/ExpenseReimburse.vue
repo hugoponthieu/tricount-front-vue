@@ -67,8 +67,8 @@ const getDepenses = async () => {
 };
 
 const computeBalances = () => {
-  var balancesMap = new Map();
-  var amount;
+  let balancesMap = new Map();
+  let amount;
   membres.value.forEach(function (membre) {
     balancesMap.set(membre.utilisateur, 0);
   });
@@ -86,11 +86,11 @@ const computeBalances = () => {
   return balancesMap;
 };
 const computeReimbursements = () => {
-  var payingMap = new Map();
-  var gettingMap = new Map();
+  let payingMap = new Map();
+  let gettingMap = new Map();
   const remboursementOrder = new Array();
   membres.value.forEach(function (membre) {
-    var amount = balances.value.get(membre.utilisateur);
+    let amount = balances.value.get(membre.utilisateur);
     if (amount < 0) {
       payingMap.set(membre.utilisateur, amount);
     } else {

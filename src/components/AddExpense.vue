@@ -134,7 +134,7 @@ const getMembres = async () => {
 const emit = defineEmits(["posted"]);
 
 async function postExpenses(payingUser, reimbursingUsers, montant, titre) {
-  var iddepense = Number;
+  let iddepense = Number;
   try {
     const response = await fetch(`http://${ipAd}/depense`, {
       method: "POST",
