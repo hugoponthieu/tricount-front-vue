@@ -43,7 +43,6 @@ async function isAuth() {
       credentials: "include",
     });
     const isAuth = (await response.status) == 200;
-    console.log(isAuth);
     return isAuth;
   } catch (error) {
     console.error("Error getting auth:", error);
