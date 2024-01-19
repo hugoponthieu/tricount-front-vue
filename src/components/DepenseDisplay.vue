@@ -118,7 +118,7 @@ async function fetchAddedData() {
 
 const getDepenses = async () => {
   try {
-    const response = await fetch(`http://${ipAd}/depense/${props.idGroup}`, {
+    const response = await fetch(`https://${ipAd}/depense/${props.idGroup}`, {
       method: "GET",
       credentials: "include",
     });
@@ -132,7 +132,7 @@ const getDepenses = async () => {
 
 const deleteDepenses = async () => {
   try {
-    await fetch(`http://${ipAd}/depense/${selectedDepenseObj.value.id}`, {
+    await fetch(`https://${ipAd}/depense/${selectedDepenseObj.value.id}`, {
       method: "DELETE",
       credentials: "include",
     });

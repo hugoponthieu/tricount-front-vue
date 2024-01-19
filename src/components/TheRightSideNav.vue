@@ -41,7 +41,7 @@ const forceRerender = async () => {
 
 const getGroups = async () => {
   try {
-    const response = await fetch(`http://${ipAd}/groupe`, {
+    const response = await fetch(`https://${ipAd}/groupe`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

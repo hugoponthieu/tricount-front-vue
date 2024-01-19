@@ -118,7 +118,7 @@ const resetValues = () => {
 };
 const getMembres = async () => {
   try {
-    const response = await fetch(`http://${ipAd}/membre/${props.idGroup}`, {
+    const response = await fetch(`https://${ipAd}/membre/${props.idGroup}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -136,7 +136,7 @@ const emit = defineEmits(["posted"]);
 async function postExpenses(payingUser, reimbursingUsers, montant, titre) {
   let iddepense = Number;
   try {
-    const response = await fetch(`http://${ipAd}/depense`, {
+    const response = await fetch(`https://${ipAd}/depense`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -157,7 +157,7 @@ async function postExpenses(payingUser, reimbursingUsers, montant, titre) {
   const part = 1 / checkedNames.value.length;
   checkedNames.value.forEach(async (rUser) => {
     try {
-      await fetch(`http://${ipAd}/remboursement`, {
+      await fetch(`https://${ipAd}/remboursement`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

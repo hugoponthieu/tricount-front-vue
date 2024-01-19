@@ -76,7 +76,7 @@ async function postGroup() {
   let currentUser;
   let idNouvGroupe;
   try {
-    const response = await fetch(`http://${ipAd}/user/current`, {
+    const response = await fetch(`https://${ipAd}/user/current`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +89,7 @@ async function postGroup() {
     console.error("Error fetching membres:", error);
   }
   try {
-    const response = await fetch(`http://${ipAd}/groupe`, {
+    const response = await fetch(`https://${ipAd}/groupe`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +105,7 @@ async function postGroup() {
     console.error("Error fetching membres:", error);
   }
   try {
-    await fetch(`http://${ipAd}/membre`, {
+    await fetch(`https://${ipAd}/membre`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
