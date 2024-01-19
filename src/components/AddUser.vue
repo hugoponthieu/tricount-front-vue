@@ -74,7 +74,7 @@ const emit = defineEmits(["posted"]);
 const newUserEmail = ref("");
 const postMembre = async () => {
   try {
-    await fetch(`http://${ipAd}/membre/`, {
+    await fetch(`https://${ipAd}/membre/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -70,7 +70,7 @@ const goToLogin = async () => {
 
 const signUp = async () => {
   try {
-    await fetch(`http://${ipAd}/access/signup`, {
+    await fetch(`https://${ipAd}/access/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

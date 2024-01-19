@@ -116,7 +116,7 @@ async function postReim(payingUser, reimbursingUsers, montant) {
   let iddepense;
   const titre = "Remboursement";
   try {
-    const response = await fetch(`http://${ipAd}/depense`, {
+    const response = await fetch(`https://${ipAd}/depense`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -137,7 +137,7 @@ async function postReim(payingUser, reimbursingUsers, montant) {
   const part = 1;
 
   try {
-    await fetch(`http://${ipAd}/remboursement`, {
+    await fetch(`https://${ipAd}/remboursement`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
